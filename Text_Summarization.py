@@ -44,8 +44,18 @@ def dictToDf(dictionary):
     df_from_series = my_series.reset_index()
     df_from_series.columns = ['Sentence', 'Scores']
 
+    sentences = df_from_series.iloc[:, 0]
+    # Here i have fixed the sentences as type str
+    # because when the sentences was converted to dictionary
+    # it was type series here i converted them back to format type string
+    sentences = sentences.astype(str)
+    scores = df_from_series.iloc[:, 1]
+    df_combined = pd.concat([sentences, scores], axis=1)
+
+    print("df_from_series :", type(df_combined))
+
     # Return Dataframe
-    return df_from_series
+    return df_combined
             
 
 text = "Delhi News Live Updates: The Supreme Court Tuesday deferred its order in Delhi Chief Minister Arvind Kejriwal’s interim bail plea. The court is likely to hear the matter day after tomorrow. Earlier in the day, it said that if it grants interim bail to Arvind Kejriwal, he cannot function as the chief minister as it will have “cascading effect” on other issues. “We are on the issue of propriety today, not on legality. We do not want anything to affect the functioning of the government,” the court noted.Kejriwal’s counsel submitted, “I cannot be fettered that I will not perform my constitutional role as Chief Minister,” adding that he “will not sign on anything related to excise policy.” The Enforcement Directorate (ED), meanwhile, has opposed Kejriwal’s interim bail plea, saying that it will “demoralise common man” and that “campaigning was a luxury”. The ED also flagged that Kejriwal had evaded the its summons in the excise policy case on nine occasions. It added that allegations show his “involvement”, and that the bail application must be before a trial court and not the Supreme Court.The top court, on its part, noted that it has given “interim bail even in heinous crimes”. It expressed concerns over the delay in the probe into the case, and has demanded that the agency present the case files that led to the arrest of the AAP leader. Kejriwal was arrested on March 21 and is currently lodged in Tihar Jail under judicial custody."
