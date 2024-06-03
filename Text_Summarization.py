@@ -31,13 +31,15 @@ def summarizer(rawdocs, summary_len):
 
     scores_df = dictToDf(sent_scores) # create a dataframe for scores
     
+    #print("Scores df: ", scores_df)
     
-    select_len = int(len(sent_tokens) * findPercent(summary_len, sent_tokens, sent_scores) )
-    summary = nlargest(select_len, sent_scores, key = sent_scores.get)
+    #select_len = int(len(sent_tokens) * 0.3)
+    summary = nlargest(len(sent_tokens), sent_scores, key = sent_scores.get)
     
     final_summary = [word.text for word in summary]
     summary = ' '.join(final_summary)
-    print("length of words " , len(summary.split(' ')))
+    spliceSummary(summary, summary_len)
+    #print("length of words " , len(summary.split(' ')))
     return summary, doc, scores_df, len(rawdocs.split(' ')), len(summary.split(' '))
 
 def dictToDf(dictionary):
@@ -60,19 +62,35 @@ def dictToDf(dictionary):
     # Return Dataframe
     return df_combined
             
-def findPercent(summary_len, sent_tokens, sent_scores):
+def spliceSummary(summary, custom_len):
 
-    for i in range(1, 11):
-        select_len = int(len(sent_tokens) * i/10 )
-        summary = nlargest(select_len, sent_scores, key = sent_scores.get)
-        
-        final_summary = [word.text for word in summary]
-        summary = ' '.join(final_summary)
-        print("length of words " , len(summary.split(' ')))
-        if len(summary.split(' ')) >= summary_len:
-            return i/10
+    
+    if custom_len > len(summary):
+        return "custom length is greater than summary"
+    else:
+        # Split the summary into words
+        words = summary.split()
+        # Take the first `custom_len` words
+        spliced_summary = " ".join(words[:custom_len])
+        print(spliced_summary)
+        i = custom_len + 1
+        while i < len(words):
+            if words[i].endswith('.'):
+                print(words[i])
+                spliced_summary += ' ' + words[i]
+                break
+            else:
+                print(words[i],",")
+                spliced_summary += ' ' + words[i]
+            i += 1
+        print("spliced summary: ", len(spliced_summary.split(' ')))
     
 
-text = "Delhi News Live Updates: The Supreme Court Tuesday deferred its order in Delhi Chief Minister Arvind Kejriwal’s interim bail plea. The court is likely to hear the matter day after tomorrow. Earlier in the day, it said that if it grants interim bail to Arvind Kejriwal, he cannot function as the chief minister as it will have “cascading effect” on other issues. “We are on the issue of propriety today, not on legality. We do not want anything to affect the functioning of the government,” the court noted.Kejriwal’s counsel submitted, “I cannot be fettered that I will not perform my constitutional role as Chief Minister,” adding that he “will not sign on anything related to excise policy.” The Enforcement Directorate (ED), meanwhile, has opposed Kejriwal’s interim bail plea, saying that it will “demoralise common man” and that “campaigning was a luxury”. The ED also flagged that Kejriwal had evaded the its summons in the excise policy case on nine occasions. It added that allegations show his “involvement”, and that the bail application must be before a trial court and not the Supreme Court.The top court, on its part, noted that it has given “interim bail even in heinous crimes”. It expressed concerns over the delay in the probe into the case, and has demanded that the agency present the case files that led to the arrest of the AAP leader. Kejriwal was arrested on March 21 and is currently lodged in Tihar Jail under judicial custody."
+#text = "Delhi News Live Updates: The Supreme Court Tuesday deferred its order in Delhi Chief Minister Arvind Kejriwal’s interim bail plea. The court is likely to hear the matter day after tomorrow. Earlier in the day, it said that if it grants interim bail to Arvind Kejriwal, he cannot function as the chief minister as it will have “cascading effect” on other issues. “We are on the issue of propriety today, not on legality. We do not want anything to affect the functioning of the government,” the court noted.Kejriwal’s counsel submitted, “I cannot be fettered that I will not perform my constitutional role as Chief Minister,” adding that he “will not sign on anything related to excise policy.” The Enforcement Directorate (ED), meanwhile, has opposed Kejriwal’s interim bail plea, saying that it will “demoralise common man” and that “campaigning was a luxury”. The ED also flagged that Kejriwal had evaded the its summons in the excise policy case on nine occasions. It added that allegations show his “involvement”, and that the bail application must be before a trial court and not the Supreme Court.The top court, on its part, noted that it has given “interim bail even in heinous crimes”. It expressed concerns over the delay in the probe into the case, and has demanded that the agency present the case files that led to the arrest of the AAP leader. Kejriwal was arrested on March 21 and is currently lodged in Tihar Jail under judicial custody."
     
-#print(summarizer(text))
+#summary, doc, scores_df, len_docs, len_summary = summarizer(text, 100)
+#print(summary)
+#print()
+
+
+
