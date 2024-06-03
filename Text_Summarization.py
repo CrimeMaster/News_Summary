@@ -64,26 +64,26 @@ def dictToDf(dictionary):
             
 def spliceSummary(article, custom_len):
 
-    
-    if custom_len > len(article):
-        return "The Word count of the article is " + len(article) + "please select lower word count"
+    #print(custom_len, "      ", len(article.split(' ')))
+    len_article = int(len(article.split(' ')))
+    #print(type(article))
+    if custom_len > len_article:
+        return "The Word count of the original article is " + str(len(article.split(' '))) + " please select lower word count"
     else:
         # Split the summary into words
-        words = article.split()
+        words = article.split(' ')
         # Take the first `custom_len` words
         spliced_summary = " ".join(words[:custom_len])
-        print(spliced_summary)
+        #print("Length of spliced summary ", len(words))
         i = custom_len + 1
         while i < len(words):
             if words[i].endswith('.'):
-                print(words[i])
                 spliced_summary += ' ' + words[i]
                 break
             else:
-                print(words[i],",")
                 spliced_summary += ' ' + words[i]
             i += 1
-        print("spliced summary: ", len(spliced_summary.split(' ')))
+        #print("spliced summary: ", len(spliced_summary.split(' ')))
         return spliced_summary
 
 
