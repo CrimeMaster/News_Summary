@@ -26,6 +26,8 @@ def show_summary_page():
             # dataframe to display with total number of sentences and thier 
             #respective scores
             st.dataframe(scores_df)
+
+            return scores_df
          
 
         except Exception as e:
