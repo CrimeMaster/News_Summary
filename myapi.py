@@ -5,6 +5,7 @@ from NewSummary import allNews
 from Text_Summarization import summarizer
 from datetime import datetime
 
+
 app = FastAPI()
 today = datetime.now()
 
