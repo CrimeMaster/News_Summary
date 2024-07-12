@@ -67,24 +67,24 @@ def spliceSummary(article, custom_len):
     #print(custom_len, "      ", len(article.split(' ')))
     len_article = int(len(article.split(' ')))
     #print(type(article))
-    if custom_len > len_article:
-        return "The Word count of the original article is " + str(len(article.split(' '))) + " please select lower word count"
-    else:
+    #if custom_len > len_article:
+        #return "The Word count of the original article is " + str(len(article.split(' '))) + " please select lower word count"
+    #else:
         # Split the summary into words
-        words = article.split(' ')
-        # Take the first `custom_len` words
-        spliced_summary = " ".join(words[:custom_len])
-        #print("Length of spliced summary ", len(words))
-        i = custom_len + 1
-        while i < len(words):
-            if words[i].endswith('.'):
-                spliced_summary += ' ' + words[i]
-                break
-            else:
-                spliced_summary += ' ' + words[i]
-            i += 1
-        #print("spliced summary: ", len(spliced_summary.split(' ')))
-        return spliced_summary
+    words = article.split(' ')
+    # Take the first `custom_len` words
+    spliced_summary = " ".join(words[:custom_len])
+    #print("Length of spliced summary ", len(words))
+    i = custom_len + 1
+    while i < len(words):
+        if words[i].endswith('.'):
+            spliced_summary += ' ' + words[i]
+            break
+        else:
+            spliced_summary += ' ' + words[i]
+        i += 1
+    #print("spliced summary: ", len(spliced_summary.split(' ')))
+    return spliced_summary
 
 
 
