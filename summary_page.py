@@ -20,6 +20,7 @@ def show_summary_page():
             
             st.title(news_title)
             st.write(summary)
+            st.write("length inputed", summary_len)
             st.write("Length of Summary ", lens_summary)
             #st.write(words)
 
